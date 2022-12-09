@@ -11,7 +11,9 @@ function App() {
   // const [items, setItems] = useState(
   //   JSON.parse(localStorage.getItem("shoppinglist"))
   // );
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(
+    JSON.parse(localStorage.getItem("shoppinglist"))
+  );
 
   const [newItem, setNewItem] = useState("");
   const [search, setSearch] = useState("");
@@ -48,7 +50,7 @@ function App() {
     e.preventDefault();
     if (!newItem) return [];
     addItem(newItem);
-    setNewItem("");
+    setNewItem([]);
   };
 
   return (
