@@ -9,9 +9,10 @@ import "./App.css";
 function App() {
   //  after reloading keep previous list - saved
 
-  const [items, setItems] = useState(
-    JSON.parse(localStorage.getItem("shoppinglist"))
-  );
+  // const [items, setItems] = useState(
+  //   JSON.parse(localStorage.getItem("shoppinglist"))
+  // );
+  const [items, setItems] = useState([]);
 
   const [newItem, setNewItem] = useState("");
   const [search, setSearch] = useState("");
@@ -46,7 +47,7 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!newItem) return [];
+    if (!newItem) return;
     addItem(newItem);
     setNewItem([]);
   };
