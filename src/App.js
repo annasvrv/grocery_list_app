@@ -8,9 +8,7 @@ import "./App.css";
 
 function App() {
   //  after reloading keep previous list - saved
-  // const [items, setItems] = useState(
-  //   JSON.parse(localStorage.getItem("shoppinglist"))
-  // );
+
   const [items, setItems] = useState(
     JSON.parse(localStorage.getItem("shoppinglist"))
   );
