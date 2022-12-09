@@ -20,6 +20,10 @@ function App() {
     localStorage.setItem("shoppinglist", JSON.stringify(newItems));
   };
 
+  const ItemsFilter = items.filter((item) =>
+    item.item.toLowerCase().includes(search.toLowerCase())
+  );
+
   const addItem = (item) => {
     const id = items.length ? items[items.length - 1].id + 1 : 1;
     const myNewItem = { id, checked: false, item };
@@ -46,12 +50,6 @@ function App() {
     setNewItem("");
   };
 
-  // const ItemsFilter = (items) => {
-  //   items.filter((item) =>
-  //     item.item.toLowerCase().includes(search.toLowerCase())
-  //   );
-  // };
-
   return (
     <div className="App">
       <Header title="Groceries List" />
@@ -62,9 +60,7 @@ function App() {
       />
       <SearchItem search={search} setSearch={setSearch} />
       <Content
-        items={items.filter((item) =>
-          item.item.toLowerCase().includes(search.toLowerCase())
-        )}
+        items={ItemsFilter}
         handleCheck={handleCheck}
         handleDelete={handleDelete}
       />
