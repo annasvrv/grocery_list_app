@@ -46,6 +46,12 @@ function App() {
     setNewItem("");
   };
 
+  // const ItemsFilter = (items) => {
+  //   items.filter((item) =>
+  //     item.item.toLowerCase().includes(search.toLowerCase())
+  //   );
+  // };
+
   return (
     <div className="App">
       <Header title="Groceries List" />
