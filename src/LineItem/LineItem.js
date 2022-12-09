@@ -10,7 +10,7 @@ const LineItem = ({ item, handleCheck, handleDelete }) => {
         handleCheck(item.id);
       }}
     >
-      <input type="checkbox" defaultItem={item.checked} />
+      <input type="checkbox" default={item.checked} />
       <label
         htmlFor=""
         style={item.checked ? { textDecoration: "line-through" } : null}
