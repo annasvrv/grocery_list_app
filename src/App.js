@@ -14,16 +14,8 @@ function App() {
   // );
 
   let [items, setItems] = useState(
-    localStorage === null
-      ? []
-      : JSON.parse(localStorage.getItem("shoppinglist"))
+    JSON.parse(localStorage.getItem("shoppinglist") || "[]")
   );
-
-  // if (localStorage === "undefined") {
-  //   items = [];
-  // } else {
-  //   items = JSON.parse(localStorage.getItem("shoppinglist"));
-  // }
 
   const [newItem, setNewItem] = useState("");
   const [search, setSearch] = useState("");
