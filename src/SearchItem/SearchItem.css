@@ -15,8 +15,8 @@
 .searchForm input[type="text"] {
   flex-grow: 1;
   max-width: 100%;
-  min-height: 48px;
-  font-size: 22px;
+  min-height: 34px;
+  font-size: 20px;
   padding: 5px 10px;
   border-radius: 7px;
   border: 0.5px solid #666666;

@@ -15,8 +15,8 @@
 .addForm input[type="text"] {
   flex-grow: 1;
   max-width: calc(100% - 50px);
-  min-height: 48px;
-  font-size: 22px;
+  min-height: 34px;
+  font-size: 20px;
   padding: 5px 10px;
   border-radius: 7px;
   border: 0.5px solid #666666;
@@ -25,11 +25,11 @@
 }
 
 button {
-  height: 48px;
-  min-width: 48px;
+  height: 34px;
+  min-width: 24px;
   border-radius: 7px;
   border: 0.5px solid #666666;
-  padding: 0.5rem;
+  padding: 5px 10px;
   font-size: 1rem;
   background-color: aliceblue;
   color: #666666;
