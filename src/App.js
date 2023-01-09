@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { RotatingLines } from "react-loader-spinner";
 import Header from "./Header/Header";
 import AddItem from "./AddItem/AddItem";
 import SearchItem from "./SearchItem/SearchItem";
@@ -20,7 +21,7 @@ function App() {
 
   const API_URL = "http://localhost:3500/items";
 
-  let [items, setItems] = useState([]);
+  const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState("");
   const [search, setSearch] = useState("");
   const [fetchError, setFetchError] = useState(null);
@@ -38,14 +39,14 @@ function App() {
         const listItems = await response.json();
         setItems(listItems);
         setFetchError(null);
-        console.log(listItems);
+        // console.log(listItems);
       } catch (err) {
         setFetchError(err.message);
       } finally {
         setIsLoading(false);
       }
     };
-
+    // simulation for rest api
     setTimeout(() => {
       (async () => await fetchItems())();
     }, 2000);
@@ -87,10 +88,22 @@ function App() {
       />
       <SearchItem search={search} setSearch={setSearch} />
       <main>
-        {isLoading && <p></p>}
+        {isLoading && (
+          <p className="loadIcon">
+            <RotatingLines
+              strokeColor="grey"
+              strokeWidth="3"
+              animationDuration="0.75"
+              width="56"
+              visible={true}
+            />{" "}
+            <br />
+            Loading Items...
+          </p>
+        )}
         {fetchError && <p style={{ color: "red" }}>{`Error: ${fetchError}`}</p>}
 
-        {!fetchError && (
+        {!fetchError && !isLoading && (
           <Content
             items={ItemsFilter}
             handleCheck={handleCheck}
