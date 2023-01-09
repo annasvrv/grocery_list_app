@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header/Header";
 import AddItem from "./AddItem/AddItem";
 import SearchItem from "./SearchItem/SearchItem";
@@ -8,39 +8,66 @@ import "./App.css";
 
 function App() {
   //  after reloading keep previous list - saved
-  let [items, setItems] = useState(
-    JSON.parse(localStorage.getItem("shoppinglist") || "[]")
-  );
+  // let [items, setItems] = useState(
+  //   JSON.parse(localStorage.getItem("shoppinglist") || "[]")
+  // );
 
+  // useEffect(() => {
+  //   localStorage.setItem("shoppinglist", JSON.stringify(items));
+  // }, [items]);
+
+  // changed local storage to data base server - making api requests
+
+  const API_URL = "http://localhost:3500/items";
+
+  let [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState("");
   const [search, setSearch] = useState("");
-
-  const setAndSaveItems = (newItems) => {
-    setItems(newItems);
-    localStorage.setItem("shoppinglist", JSON.stringify(newItems));
-  };
+  const [fetchError, setFetchError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const ItemsFilter = items.filter((item) =>
     item.item.toLowerCase().includes(search.toLowerCase())
   );
 
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw Error("Did not receive expected data");
+        const listItems = await response.json();
+        setItems(listItems);
+        setFetchError(null);
+        console.log(listItems);
+      } catch (err) {
+        setFetchError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    setTimeout(() => {
+      (async () => await fetchItems())();
+    }, 2000);
+  }, []);
+
   const addItem = (item) => {
     const id = items.length ? items[items.length - 1].id + 1 : 1;
     const myNewItem = { id, checked: false, item };
     const listItems = [...items, myNewItem];
-    setAndSaveItems(listItems);
+    setItems(listItems);
   };
 
   const handleCheck = (id) => {
     const listItems = items.map((item) =>
       item.id === id ? { ...item, checked: !item.checked } : item
     );
-    setAndSaveItems(listItems);
+    setItems(listItems);
   };
 
   const handleDelete = (id) => {
     const listItems = items.filter((item) => item.id !== id);
-    setAndSaveItems(listItems);
+    setItems(listItems);
   };
 
   const handleSubmit = (e) => {
@@ -59,11 +86,19 @@ function App() {
         handleSubmit={handleSubmit}
       />
       <SearchItem search={search} setSearch={setSearch} />
-      <Content
-        items={ItemsFilter}
-        handleCheck={handleCheck}
-        handleDelete={handleDelete}
-      />
+      <main>
+        {isLoading && <p></p>}
+        {fetchError && <p style={{ color: "red" }}>{`Error: ${fetchError}`}</p>}
+
+        {!fetchError && (
+          <Content
+            items={ItemsFilter}
+            handleCheck={handleCheck}
+            handleDelete={handleDelete}
+          />
+        )}
+      </main>
+
       <Footer length={items.length} />
     </div>
   );
